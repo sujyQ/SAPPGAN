@@ -42,11 +42,25 @@ Run this command:
 
 ## Test
 ### 1. Prepare test data
-Follow [MSPLGAN](https://github.com/dolphin0104/MSPL-GAN#3-test) to prepare test dataset.
+1.1 Follow [MSPLGAN](https://github.com/dolphin0104/MSPL-GAN#3-test) to prepare test dataset.
+
+1.2 Specify './test/test.py':
+```python
+experiment = 'your/experiment/name'
+
+MODEL_G_DIR = os.path.join('/path/to/yours/experiment', experiment, 'weights/G_{}_best.pth'.format(best))
+
+...
+
+INPUT_IMG_DIR = os.path.join('/path/to/test/dataset', 'Test_data_{}'.format(t), 'Test_data_{}'.format(tests), '{}_blur'.format(tests))
+REAL_IMG_DIR = os.path.join('/path/to/test/dataset', 'Test_data_{}'.format(t), 'Test_data_{}'.format(tests), '{}_gt'.format(tests))
+OUTPUT_IMG_DIR = os.path.join('/path/to/yours/results', '{}_{}'.format(experiment, best), 'MSPL-{}'.format(t), tests)
+
+```
 
 
 ### 2. Begin to test
-Run this command:
+Run this command on `./test`:
 
 `python test.py`
 
