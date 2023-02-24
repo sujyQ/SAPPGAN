@@ -8,8 +8,8 @@ Pytorch implementation of "Semantic-Aware Face Deblurring with Pixel-Wise Projec
 ![framework](./figures/framework.PNG)
 
 ## Requirements
-+ Python
-+ PyTorch
++ Python 3.7
++ PyTorch == 1.8.1
 + numpy
 + torchvision
 + PIL
@@ -19,13 +19,51 @@ Pytorch implementation of "Semantic-Aware Face Deblurring with Pixel-Wise Projec
 
 ## Train
 ### 1. Prepare training data
-1.1 
+1.1 Download the [MSPL](https://github.com/dolphin0104/MSPL-GAN#2-training) dataset.
+
+1.2 Download the [VGGFace16](https://github.com/ustclby/Unsupervised-Domain-Specific-Deblurring) model weight to `./test/`
+
+1.3 Specify `./utils/parser.py`:
+```python
+parser.add_argument("--celebahq_folder", type=str, default="path / to / your / CelebAHQ / dataset ")
+parser.add_argument("--valid_folder", type=str, default="path / to / your / validation / dataset ")
+parser.add_argument("--kernel_path", type=str, default="path / to / your / training / kernels")
+
+parser.add_argument("--VGGFace16", type=str, default='path/to/VGGFace16.pth')
+
+```
+
 
 ### 2. Begin to train
+Run this command:
+
+`python train.py`
+
 
 ## Test
 ### 1. Prepare test data
+1.1 Follow [MSPLGAN](https://github.com/dolphin0104/MSPL-GAN#3-test) to prepare test dataset.
+
+1.2 Specify './test/test.py':
+```python
+experiment = 'your/experiment/name'
+
+MODEL_G_DIR = os.path.join('/path/to/yours/experiment', experiment, 'weights/G_{}_best.pth'.format(best))
+
+...
+
+INPUT_IMG_DIR = os.path.join('/path/to/test/dataset', 'Test_data_{}'.format(t), 'Test_data_{}'.format(tests), '{}_blur'.format(tests))
+REAL_IMG_DIR = os.path.join('/path/to/test/dataset', 'Test_data_{}'.format(t), 'Test_data_{}'.format(tests), '{}_gt'.format(tests))
+OUTPUT_IMG_DIR = os.path.join('/path/to/yours/results', '{}_{}'.format(experiment, best), 'MSPL-{}'.format(t), tests)
+
+```
+
+
 ### 2. Begin to test
+Run this command on `./test`:
+
+`python test.py`
+
 
 ## Comparative Results
 ### Quantitative Comparisons on MSPL test set
